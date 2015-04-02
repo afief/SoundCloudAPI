@@ -1,0 +1,44 @@
+$baseUrl: "../../";
+
+$blue: #1A66BB;
+$lightBlue: #AAC6E5;
+$darkBlue: #284D76;
+$red : rgb(226, 45, 45);
+$reddark : rgb(154, 23, 23);
+$grey : #333333;
+$yellow: rgb(219, 219, 64);
+$lightYellow: rgba(219, 219, 64, 0.5);
+
+@mixin easing() {
+    -webkit-transition:0.5s ease;
+    -moz-transition:0.5s ease;
+    -o-transition:0.5s ease;
+    -ms-transition:0.5s ease;
+    transition:0.5s ease;
+}
+@mixin clearfix {
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
+
+@font-face {
+    font-family: "Comic Neue";
+    src: url($baseUrl + "fonts/ComicNeue-Angular-Regular.woff");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  src: url($baseUrl + "fonts/roboto.ttf");
+}
+
+body {
+    font-family: "Roboto";
+    margin: 0px;
+    padding: 0px;
+    background-color: #efefef;
+}
