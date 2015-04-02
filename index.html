@@ -6,12 +6,17 @@
 	<title>Puterin</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
+	<link rel="stylesheet" href="style/fa/css/font-awesome.min.css">
 	<link rel="stylesheet" href="style/style.php/style.scss">
-
+	
 	<script src="js/angular/angular.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/angular/angular-route.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/angular/angular-sanitize.js" type="text/javascript" charset="utf-8"></script>
+
+	<script src="js/SoundcloudSDK.js" type="text/javascript" charset="utf-8"></script>
 
 	<script src="js/PageModule.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/SearchModule.js" type="text/javascript" charset="utf-8"></script>
 	<script src="player/PlayerModule.js" type="text/javascript" charset="utf-8"></script>
 
 	<script src="js/main.js" type="text/javascript" charset="utf-8"></script>
@@ -19,12 +24,11 @@
 <body>
 
 	<div header></div>
+	
+	<div player-directive></div>
 
 	<div class="container">
 		<div ng-view></div>
 	</div>
-	
-
-	<div player-directive></div>
 </body>
 </html>

@@ -1,0 +1,19 @@
+<div class="search">
+	<form ng-submit="searchSubmit()">
+		<input type="text" ng-model="searchText">
+		<button>
+			<span class="icon fa fa-search"></span>
+			<span class="text"></span>
+		</button>
+	</form>
+	<ul class="result">
+		<li ng-repeat="res in searchResult" ng-click="playUrl(res.url)">
+			<div class="icon" style="background-image: url('{{res.thumbnail}}');"></div>				
+			<div class="konten">
+				<div class="judul">{{ res.judul }}</div>
+				<div class="tanggal">{{ res.tanggal }}</div>
+				<div class="deskripsi" ng-bind-html="res.deskripsi | linky:'_blank'"></div>
+			</div>
+		</li>
+	</ul>
+</div>

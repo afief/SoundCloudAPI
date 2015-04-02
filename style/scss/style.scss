@@ -42,3 +42,109 @@ body {
     padding: 0px;
     background-color: #efefef;
 }
+
+header {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    background-color: $grey;
+    .wrapper {
+        max-width: 1000px;
+        margin: 0px auto;
+        h2{
+            margin: 0px;
+            padding: 10px;
+            color: white;
+            font-weight: normal;
+            font-size: medium;
+        }
+    }
+}
+
+.player {
+    margin-top: 40px;
+    video {
+        // visibility: none;
+        // width: 0px;
+        // height: 0px;
+    }
+}
+
+.search {
+    background-color: white;
+    padding: 10px;
+    form {
+        display: flex;
+        width: 100%;
+        input {
+            padding: 10px 14px;
+            color: #333;
+            border: solid 1px #666;
+            box-shadow: inset 0px 0px 3px -1px #333;
+            border-radius: 3px;
+            width: 100%;
+            outline: none;
+            &:active, &:focus {
+                border-color: $lightBlue;
+            }
+        }
+        button {
+            margin-left: 10px;
+            width: 50px;
+            color: #333;
+            background-color: $lightBlue;
+            border: solid 1px $blue;
+            border-radius: 3px;
+            box-shadow: 0px 0px 3px -1px #333;
+            cursor: pointer;
+        }
+    }
+    ul.result {
+        list-style: none;
+        padding: 0px;
+        margin: 0px;
+        li {
+            display: flex;
+            
+            padding: 10px;
+            border-bottom: solid 1px #ccc;
+            .icon {
+                min-width: 100px;
+                min-height: 100px;
+                max-width: 100px;
+                max-height: 100px;
+                background-size: cover;
+                background-position: center center;
+            }
+            .konten {
+                margin-left: 10px;
+                word-wrap: break-word;
+                .judul {
+                    color: #444;
+                }
+                .deskripsi {
+                    font-size: small;
+                    color: #666;
+                }
+                .tanggal {
+                    font-size: small;
+                    color: #666;
+                    margin-bottom: 5px;
+                }
+            }
+        }
+    }
+}
+
+.container {
+    .page {
+        max-width: 1000px;
+        margin: 0px auto;
+        margin-top: 20px;        
+
+        .main {
+            max-width: 650px;
+        }
+    }
+}

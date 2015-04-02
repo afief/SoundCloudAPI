@@ -1,0 +1,95 @@
+/* compiled by scssphp v0.0.9 on Thu, 02 Apr 2015 14:24:48 +0200 (0.0352s) */
+
+@font-face {
+  font-family: "Comic Neue";
+  src: url("../../fonts/ComicNeue-Angular-Regular.woff"); }
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../../fonts/roboto.ttf"); }
+
+body {
+  font-family: "Roboto";
+  margin: 0px;
+  padding: 0px;
+  background-color: #efefef; }
+
+header {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  background-color: #333; }
+  header .wrapper {
+    max-width: 1000px;
+    margin: 0px auto; }
+    header .wrapper h2 {
+      margin: 0px;
+      padding: 10px;
+      color: white;
+      font-weight: normal;
+      font-size: medium; }
+
+.player {
+  margin-top: 40px; }
+  .search {
+    background-color: white;
+    padding: 10px; }
+  .search form {
+    display: flex;
+    width: 100%; }
+    .search form input {
+      padding: 10px 14px;
+      color: #333;
+      border: solid 1px #666;
+      box-shadow: inset 0px 0px 3px -1px #333;
+      border-radius: 3px;
+      width: 100%;
+      outline: none; }
+      .search form input:active, .search form input:focus {
+        border-color: #aac6e5; }
+    .search form button {
+      margin-left: 10px;
+      width: 50px;
+      color: #333;
+      background-color: #aac6e5;
+      border: solid 1px #1a66bb;
+      border-radius: 3px;
+      box-shadow: 0px 0px 3px -1px #333;
+      cursor: pointer; }
+  .search ul.result {
+    list-style: none;
+    padding: 0px;
+    margin: 0px; }
+    .search ul.result li {
+      display: flex;
+      padding: 10px;
+      border-bottom: solid 1px #ccc; }
+      .search ul.result li .icon {
+        min-width: 100px;
+        min-height: 100px;
+        max-width: 100px;
+        max-height: 100px;
+        background-size: cover;
+        background-position: center center; }
+      .search ul.result li .konten {
+        margin-left: 10px;
+        word-wrap: break-word; }
+        .search ul.result li .konten .judul {
+          color: #444; }
+        .search ul.result li .konten .deskripsi {
+          font-size: small;
+          color: #666; }
+        .search ul.result li .konten .tanggal {
+          font-size: small;
+          color: #666;
+          margin-bottom: 5px; }
+
+.container .page {
+  max-width: 1000px;
+  margin: 0px auto;
+  margin-top: 20px; }
+  .container .page .main {
+    max-width: 650px; }
