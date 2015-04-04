@@ -14,6 +14,7 @@
 	<script src="js/angular/angular-sanitize.js" type="text/javascript" charset="utf-8"></script>
 
 	<script src="js/SoundcloudSDK.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/iframe_api.js" type="text/javascript" charset="utf-8"></script>
 
 	<script src="js/PageModule.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/SearchModule.js" type="text/javascript" charset="utf-8"></script>
@@ -24,11 +25,18 @@
 <body>
 
 	<div header></div>
-	
-	<div player-directive></div>
+	<div class="headerheight">&nbsp;</div>
 
 	<div class="container">
-		<div ng-view></div>
+		<div class="main">
+
+			<div player-directive></div>
+			<div ng-view></div>
+
+		</div>
+		<div class="sidebar">
+			<div playlist-directive></div>
+		</div>
 	</div>
 </body>
 </html>

@@ -7,11 +7,13 @@
 		</button>
 	</form>
 	<ul class="result">
-		<li ng-repeat="res in searchResult" ng-click="playUrl(res.url)">
-			<div class="icon" style="background-image: url('{{res.thumbnail}}');"></div>				
+		<li ng-repeat="res in searchResult" ng-click="resultClick(res)">
+			<div class="icon" style="background-image: url('{{res.thumbnail}}');">
+				<img ng-src="images/{{res.from}}.png" />
+			</div>				
 			<div class="konten">
 				<div class="judul">{{ res.judul }}</div>
-				<div class="tanggal">{{ res.tanggal }}</div>
+				<div class="tanggal">{{ dateFormat(res.tanggal) }}</div>
 				<div class="deskripsi" ng-bind-html="res.deskripsi | linky:'_blank'"></div>
 			</div>
 		</li>

@@ -1,0 +1,46 @@
+<div class="page playlist">
+
+	<div class="thumbnail">
+		
+		<img ng-src="{{ thumbnail ? thumbnail : 'images/default_medium.jpg' }}" alt="">
+
+		<div class="buttons" ng-class="{disable: !isPlay}">
+			
+			<button ng-click="playerPrev()">
+				<li class="fa fa-step-backward"></li>
+			</button>
+
+			<button class="big" ng-click="playerPlay()" ng-hide="isPlay">
+				<li class="fa fa-play"></li>
+			</button>
+			<button class="big pause" ng-click="playerPause()" ng-show="isPlay">
+				<li class="fa fa-pause"></li>
+			</button>
+
+			<button ng-click="playerNext()">
+				<li class="fa fa-step-forward"></li>
+			</button>
+
+		</div>
+	</div>
+	
+	<div class="current" ng-show="playlist.isCurrent()">
+		<h3>
+			{{ playlist.current.title }}
+		</h3>
+		<ul>
+			<li ng-repeat="pl in playlist.current.songs track by $index" ng-click="playAt($index)" ng-class="{selected: (playlist.currentIndex == $index)}">
+				<div class="icon"  style="background-image: url('{{pl.thumbnail}}');"></div>
+				<div class="konten">
+					<div class="judul">{{ pl.judul }}</div>
+					<div class="tanggal">{{ dateFormat(pl.tanggal) }}</div>
+					<div class="tanggal">{{ timeToStr(pl.duration) }}</div>
+				</div>
+			</li>
+		</ul>
+		<div class="keterangan">
+			{{ timeToStr(playlist.current.totalDuration) }}
+		</div>
+	</div>
+
+</div>

@@ -6,7 +6,7 @@ $darkBlue: #284D76;
 $red : rgb(226, 45, 45);
 $reddark : rgb(154, 23, 23);
 $grey : #333333;
-$yellow: rgb(219, 219, 64);
+$yellow: #F5DF45;
 $lightYellow: rgba(219, 219, 64, 0.5);
 
 @mixin easing() {
@@ -22,6 +22,51 @@ $lightYellow: rgba(219, 219, 64, 0.5);
         display: table;
         clear: both;
     }
+}
+@mixin list_thumbnail {
+
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+    li {
+        display: flex;
+        cursor: pointer;
+        padding: 10px;
+        border-bottom: solid 1px #ccc;
+        .icon {
+            min-width: 100px;
+            min-height: 100px;
+            max-width: 100px;
+            max-height: 100px;
+            background-size: cover;
+            background-position: center center;
+            position: relative;
+            img {
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                width: 30%;
+                height: 30%;
+            }
+        }
+        .konten {
+            margin-left: 10px;
+            word-wrap: break-word;
+            .judul {
+                color: #444;
+            }
+            .deskripsi {
+                font-size: small;
+                color: #666;
+            }
+            .tanggal {
+                font-size: small;
+                color: #666;
+                margin-bottom: 5px;
+            }
+        }
+    }
+    
 }
 
 @font-face {
@@ -49,6 +94,7 @@ header {
     left: 0px;
     width: 100%;
     background-color: $grey;
+    z-index: 100;
     .wrapper {
         max-width: 1000px;
         margin: 0px auto;
@@ -61,30 +107,39 @@ header {
         }
     }
 }
+.headerheight {
+    width: 100%;
+    height: 40px;
+}
 
 .player {
-    margin-top: 40px;
     video {
         // visibility: none;
-        // width: 0px;
-        // height: 0px;
+        width: 0px;
+        height: 0px;
+        display: table;
+    }
+    iframe {
+        display: none;
     }
 }
 
 .search {
     background-color: white;
-    padding: 10px;
     form {
         display: flex;
-        width: 100%;
+        padding: 20px;
+        background-color: #333;
+        box-shadow: 0px 2px 4px -2px #333;
         input {
             padding: 10px 14px;
             color: #333;
-            border: solid 1px #666;
+            border: 0px;
             box-shadow: inset 0px 0px 3px -1px #333;
             border-radius: 3px;
             width: 100%;
             outline: none;
+            font-size: large;
             &:active, &:focus {
                 border-color: $lightBlue;
             }
@@ -93,58 +148,123 @@ header {
             margin-left: 10px;
             width: 50px;
             color: #333;
-            background-color: $lightBlue;
-            border: solid 1px $blue;
+            background-color: $yellow;
+            border: solid 1px $yellow;
             border-radius: 3px;
             box-shadow: 0px 0px 3px -1px #333;
             cursor: pointer;
         }
     }
     ul.result {
-        list-style: none;
-        padding: 0px;
-        margin: 0px;
-        li {
+        @include list_thumbnail;
+        padding: 0px 10px;
+    }
+}
+
+.playlist {
+    margin-left: 15px;
+    .thumbnail {
+        position: relative;
+        background-color: #333;
+        box-shadow: 1px 1px 3px -1px #333;
+        > img {
+            width: 100%;
+        }
+        .buttons {
+            position: absolute;
+            width: 100%;
+            bottom: 0px;
+            left: 0px;
             display: flex;
-            
-            padding: 10px;
-            border-bottom: solid 1px #ccc;
-            .icon {
-                min-width: 100px;
-                min-height: 100px;
-                max-width: 100px;
-                max-height: 100px;
-                background-size: cover;
-                background-position: center center;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(51, 51, 51, 0.5);
+            padding: 10px 0px;
+            border-top: solid 4px #fff;
+            button {
+                background-color: #333;
+                border: solid 3px #fff;
+                border-radius: 50%;
+                color: white;
+                cursor: pointer;
+                text-align: center;
+                width: 50px;
+                height: 50px;
+                margin: 0px 5px;
+                &.big {
+                    width: 80px;
+                    height: 80px;
+                    li {
+                        font-size: large;
+                        padding-left: 7px;
+                    }
+                    &.pause {
+                        li {
+                            padding-left: 0px;
+                        }
+                    }
+                }
             }
-            .konten {
-                margin-left: 10px;
-                word-wrap: break-word;
-                .judul {
-                    color: #444;
+            &.disable {
+                opacity: 0.5;
+            }
+        }
+    }
+    .current {
+        background-color: white;
+        box-shadow: 1px 1px 3px -1px #333;
+        margin-top: 10px;
+        h3 {
+            font-size: medium;
+            font-weight: normal;
+            padding: 15px 20px;
+            margin: 0px;
+            color: #333;
+            box-shadow: 0px 1px 3px -1px #333;
+            background-color: #D6E2EA;
+        }
+        ul {
+            @include list_thumbnail;
+            li {
+                .icon {
+                    min-width: 50px;
+                    min-height: 50px;
+                    max-width: 50px;
+                    max-height: 50px;
                 }
-                .deskripsi {
-                    font-size: small;
-                    color: #666;
-                }
-                .tanggal {
-                    font-size: small;
-                    color: #666;
-                    margin-bottom: 5px;
+                &.selected {
+                    border-left: solid 10px#1A66BB;
+                    border-right: solid 2px#1A66BB;
+                    box-shadow: 0px 1px 3px -1px #333;
                 }
             }
+        }
+        .keterangan {
+            padding: 15px 20px;
+            color: #333;
+            font-size: small;
         }
     }
 }
 
 .container {
-    .page {
-        max-width: 1000px;
-        margin: 0px auto;
-        margin-top: 20px;        
+    @include clearfix;
+    max-width: 1000px;
+    margin: 0px auto;
+    margin-top: 10px;  
 
-        .main {
-            max-width: 650px;
-        }
+    .main {
+        max-width: 600px;
+        width: 600px;
+        float: left;
+    }
+    .sidebar {
+        max-width: 400px;
+        width: 400px;
+        float: left;
+    }
+
+    .page {
+
     }
 }
