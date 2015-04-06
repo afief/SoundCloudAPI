@@ -151,6 +151,8 @@ playerMod.controller("playlistController", ["$scope", "$location", "$element", "
 	$scope.playlist = playlist;
 	ppl = playlist;
 
+	$scope.seekBar = SeekBarObject();
+
 	$scope.timeToStr = function(duration) {
 		var jam = Math.floor(duration / 3600);
 		duration -= jam * 3600;
@@ -176,6 +178,8 @@ playerMod.controller("playlistController", ["$scope", "$location", "$element", "
 	}
 }]);
 playerMod.controller("PlayerController", ["$scope", "$location", "$element", "playlist", function($scope, $location, $element, playlist) {
+
+	$scope.currentSong = {};
 
 	//lg($element);
 	var video = $element[0].children[1];
@@ -230,6 +234,7 @@ playerMod.controller("PlayerController", ["$scope", "$location", "$element", "pl
 			$scope.playFrom = "yt";
 			$scope.playYoutube(obj.id);
 		}
+		$scope.currentSong = obj;
 		$scope.thumbnail = obj.thumbnail;
 	}
 
@@ -284,6 +289,10 @@ playerMod.controller("PlayerController", ["$scope", "$location", "$element", "pl
 		$scope.isPaused = false;
 		$scope.playNextSong();
 		$scope.$apply();
+	});
+
+	video.addEventListener("timeupdate", function(e) {		
+		$scope.seekBar.seekToPercent(video.currentTime / video.duration * 100);
 	});
 
 }]);

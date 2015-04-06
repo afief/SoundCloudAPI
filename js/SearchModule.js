@@ -44,7 +44,7 @@ searchMod.controller("SearchController", ["$scope", "$location", "$element", "$h
 				$scope.$apply();
 			});
 
-			$http.get("https://www.googleapis.com/youtube/v3/search?part=id,snippet&q=" + encodeURI($scope.searchText) + "&type=video&order=relevance&maxResults=5&key=" + google_id).
+			$http.get("https://www.googleapis.com/youtube/v3/search?part=id,snippet&q=" + encodeURI($scope.searchText) + "&videoLicense=creativeCommon&type=video&order=relevance&maxResults=5&key=" + google_id).
 			success(function(res) {
 				lg("Youtube Search", res);
 				if (res.items.length > 0) {

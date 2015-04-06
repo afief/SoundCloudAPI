@@ -20,7 +20,7 @@ pageModule.directive('header', function () {
         replace: true,
         templateUrl: "pages/header.html",
         controller: ['$scope', '$route', "user", function ($scope, $route, user) {
-        	user.cek().success(function(res) {
+        	user.cek().then(function(res) {
         		lg("result", res);
         	});
         }]

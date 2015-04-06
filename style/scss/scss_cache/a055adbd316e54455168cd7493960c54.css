@@ -1,0 +1,371 @@
+/* compiled by scssphp v0.0.9 on Mon, 06 Apr 2015 13:17:01 +0200 (0.0645s) */
+
+@font-face {
+  font-family: "Comic Neue";
+  src: url("../../fonts/ComicNeue-Angular-Regular.woff"); }
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../../fonts/roboto.ttf"); }
+
+body {
+  font-family: "Roboto";
+  margin: 0px;
+  padding: 0px;
+  background-color: #efefef; }
+
+header {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  background-color: #333;
+  z-index: 100; }
+  header .wrapper {
+    max-width: 1000px;
+    margin: 0px auto; }
+    header .wrapper h2 {
+      margin: 0px;
+      padding: 10px;
+      color: white;
+      font-weight: normal;
+      font-size: medium; }
+
+.headerheight {
+  width: 100%;
+  height: 40px; }
+
+.player video {
+  width: 0px;
+  height: 0px;
+  display: table; }
+  .player iframe {
+    display: none; }
+
+.search {
+  background-color: white; }
+  .search form {
+    display: flex;
+    padding: 20px;
+    background-color: #333;
+    box-shadow: 0px 2px 4px -2px #333; }
+    .search form input {
+      padding: 10px 14px;
+      color: #333;
+      border: 0px;
+      box-shadow: inset 0px 0px 3px -1px #333;
+      border-radius: 3px;
+      width: 100%;
+      outline: none;
+      font-size: large; }
+      .search form input:active, .search form input:focus {
+        border-color: #aac6e5; }
+    .search form button {
+      margin-left: 10px;
+      width: 50px;
+      color: #333;
+      background-color: #f5df45;
+      border: solid 1px #f5df45;
+      border-radius: 3px;
+      box-shadow: 0px 0px 3px -1px #333;
+      cursor: pointer; }
+  .search ul.result {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+    padding: 0px 10px; }
+    .search ul.result li {
+      display: flex;
+      cursor: pointer;
+      padding: 10px;
+      border-bottom: solid 1px #ccc; }
+      .search ul.result li .icon {
+        min-width: 100px;
+        min-height: 100px;
+        max-width: 100px;
+        max-height: 100px;
+        background-size: cover;
+        background-position: center center;
+        position: relative; }
+        .search ul.result li .icon img {
+          position: absolute;
+          top: 0px;
+          left: 0px;
+          width: 30%;
+          height: 30%; }
+      .search ul.result li .konten {
+        margin-left: 10px;
+        word-wrap: break-word; }
+        .search ul.result li .konten .judul {
+          color: #444; }
+        .search ul.result li .konten .deskripsi {
+          font-size: small;
+          color: #666; }
+        .search ul.result li .konten .tanggal {
+          font-size: small;
+          color: #666;
+          margin-bottom: 5px; }
+
+.playlist {
+  margin-left: 15px; }
+  .playlist .thumbnail {
+    position: relative;
+    background-color: #333;
+    box-shadow: 1px 1px 3px -1px #333; }
+    .playlist .thumbnail > img {
+      width: 100%; }
+    .playlist .thumbnail .buttons {
+      position: absolute;
+      width: 100%;
+      bottom: 0px;
+      left: 0px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(51, 51, 51, 0.5);
+      padding: 10px 0px;
+      border-top: solid 4px #fff; }
+      .playlist .thumbnail .buttons button {
+        background-color: #333;
+        border: solid 3px #fff;
+        border-radius: 50%;
+        color: white;
+        cursor: pointer;
+        text-align: center;
+        width: 50px;
+        height: 50px;
+        margin: 0px 5px; }
+        .playlist .thumbnail .buttons button.big {
+          width: 80px;
+          height: 80px; }
+          .playlist .thumbnail .buttons button.big li {
+            font-size: large;
+            padding-left: 7px; }
+          .playlist .thumbnail .buttons button.big.pause li {
+            padding-left: 0px; }
+      .playlist .thumbnail .buttons.disable {
+        opacity: 0.5; }
+  .playlist .current {
+    background-color: white;
+    box-shadow: 1px 1px 3px -1px #333;
+    margin-top: 10px; }
+    .playlist .current h3 {
+      font-size: medium;
+      font-weight: normal;
+      padding: 15px 20px;
+      margin: 0px;
+      color: #333;
+      box-shadow: 0px 1px 3px -1px #333;
+      background-color: #f5df45; }
+    .playlist .current ul {
+      list-style: none;
+      padding: 0px;
+      margin: 0px; }
+      .playlist .current ul li {
+        display: flex;
+        cursor: pointer;
+        padding: 10px;
+        border-bottom: solid 1px #ccc; }
+        .playlist .current ul li .icon {
+          min-width: 100px;
+          min-height: 100px;
+          max-width: 100px;
+          max-height: 100px;
+          background-size: cover;
+          background-position: center center;
+          position: relative; }
+          .playlist .current ul li .icon img {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 30%;
+            height: 30%; }
+        .playlist .current ul li .konten {
+          margin-left: 10px;
+          word-wrap: break-word; }
+          .playlist .current ul li .konten .judul {
+            color: #444; }
+          .playlist .current ul li .konten .deskripsi {
+            font-size: small;
+            color: #666; }
+          .playlist .current ul li .konten .tanggal {
+            font-size: small;
+            color: #666;
+            margin-bottom: 5px; }
+      .playlist .current ul li .icon {
+        min-width: 50px;
+        min-height: 50px;
+        max-width: 50px;
+        max-height: 50px; }
+        .playlist .current ul li.selected {
+          border-left: solid 10px #1a66bb;
+          border-right: solid 2px #1a66bb;
+          box-shadow: 0px 1px 3px -1px #333; }
+    .playlist .current .keterangan {
+      padding: 15px 20px;
+      color: #333;
+      font-size: small;
+      background-color: #fbffbb; }
+
+.container {
+  max-width: 1000px;
+  margin: 0px auto;
+  margin-top: 10px; }
+  .container:after {
+    content: "";
+    display: table;
+    clear: both; }
+  .container .main {
+    max-width: 600px;
+    width: 600px;
+    float: left; }
+  .container .sidebar {
+    max-width: 400px;
+    width: 400px;
+    float: left; }
+  .seekBar {
+    position: absolute;
+    top: -10px;
+    left: 0px;
+    width: 100%; }
+  .seekBar:after {
+    content: "";
+    display: table;
+    clear: both; }
+  .seekBar .inputRange {
+    width: 100%;
+    height: 30px;
+    position: relative; }
+    .seekBar .inputRange #inputRangeButton {
+      background-color: #ddd;
+      width: 15px;
+      height: 15px;
+      border-radius: 5px;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      z-index: 7;
+      cursor: pointer; }
+      .seekBar .inputRange #inputRangeButton:hover {
+        background-color: rgba(62, 152, 249, 0.901961); }
+    .seekBar .inputRange .trans {
+      -webkit-transition: 0.5s;
+      -moz-transition: 0.5s;
+      -o-transition: 0.5s;
+      transition: 0.5s; }
+    .seekBar .inputRange #inputRangeBFollow {
+      background-color: rgba(0, 123, 255, 0.901961);
+      border-radius: 3px 0px 0px 3px;
+      position: absolute;
+      height: 5px;
+      top: 5px;
+      width: 0%;
+      z-index: 6; }
+    .seekBar .inputRange #inputRangeBackground {
+      width: 100%;
+      position: absolute;
+      height: 5px;
+      border-radius: 3px;
+      background-color: #ccc;
+      z-index: 2;
+      top: 5px; }
+    .seekBar .inputRange #loader {
+      background-color: rgba(145, 153, 47, 0.901961);
+      border-radius: 3px;
+      position: absolute;
+      height: 5px;
+      top: 5px;
+      width: 0%;
+      z-index: 5; }
+  .seekBar #timerInfo {
+    font-size: 12px;
+    position: absolute;
+    bottom: -7px;
+    color: #ddd;
+    right: 20px; }
+
+button.awesome {
+  padding: 0px;
+  background-color: #f5df45;
+  border: none;
+  color: #333;
+  cursor: pointer; }
+  button.awesome .icon {
+    padding: 10px 10px 10px 15px;
+    background-color: #ddcb45; }
+  button.awesome .text {
+    padding: 10px 15px 10px 10px; }
+
+.popup {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 1000; }
+  .popup .wrapper {
+    background-color: white;
+    border: solid 3px #fff;
+    display: table;
+    max-width: 400px;
+    margin: 0px auto;
+    margin-top: 30px;
+    box-shadow: 1px 1px 3px -1px #333; }
+    .popup .wrapper:after {
+      content: "";
+      display: table;
+      clear: both; }
+    .popup .wrapper .header {
+      position: relative; }
+      .popup .wrapper .header .exit {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        color: white;
+        background-color: #1a66bb;
+        padding: 6px 12px;
+        border-radius: 50%;
+        border: solid 3px #fff;
+        cursor: pointer; }
+    .popup .wrapper h2 {
+      background-color: #1a66bb;
+      color: white;
+      margin: 0px;
+      font-size: large;
+      padding: 15px 20px;
+      text-align: center; }
+    .popup .wrapper form {
+      padding: 10px 7px;
+      color: #333; }
+      .popup .wrapper form input {
+        width: 94%;
+        padding: 10px 3%;
+        margin-bottom: 10px;
+        outline: none; }
+    .popup .wrapper .group:after {
+      content: "";
+      display: table;
+      clear: both; }
+    .popup .wrapper .keterangan {
+      color: #333;
+      font-size: small;
+      padding: 10px; }
+  .popup.login .ingatlogin {
+    display: inline;
+    float: left;
+    margin-top: 6px; }
+    .popup.login .ingatlogin:after {
+      content: "";
+      display: table;
+      clear: both; }
+    .popup.login .ingatlogin label {
+      color: #666;
+      font-size: small; }
+    .popup.login .ingatlogin input {
+      float: left;
+      width: inherit; }
+    .popup.login button {
+      float: right; }

@@ -222,7 +222,7 @@ header {
             margin: 0px;
             color: #333;
             box-shadow: 0px 1px 3px -1px #333;
-            background-color: #D6E2EA;
+            background-color: #F5DF45;
         }
         ul {
             @include list_thumbnail;
@@ -244,6 +244,7 @@ header {
             padding: 15px 20px;
             color: #333;
             font-size: small;
+            background-color: rgb(251, 255, 187);
         }
     }
 }

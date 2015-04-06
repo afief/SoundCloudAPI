@@ -1,5 +1,5 @@
 var userModule = angular.module("UserModule", []);
-
+var qq;
 userModule.factory("user", ["$http","$q", function($http, $q) {
 
 	var key = window.localStorage.getItem("key") || "";
@@ -48,18 +48,16 @@ userModule.factory("user", ["$http","$q", function($http, $q) {
 		},
 		cek: function() {
 			console.log("key", key);
-			
+			var deferred = $q.defer();
+
 			if (key == "")
-				return $q.when({data: {status: false}});
+				return $q.when({status: false});
 
-			var promise =  $http.post("api/user", serialize({key: key}));
-			promise.success(function(res) {
-				if (res.status) {
-					isLogin = true;
-				}
-			});
+			$http.post("api/user", serialize({key: key})).
+			success(deferred.resolve).
+			error(deferred.resolve);
 
-			return promise;
+			return deferred.promise;
 		},
 		changeKey: changeKey,
 		logout: function() {
