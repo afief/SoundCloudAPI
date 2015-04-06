@@ -1,0 +1,28 @@
+<div class="popup login" ng-show="loginshow">
+	<div class="wrapper">
+		<div class="header">
+			<h2>Login</h2>
+			<div class="exit" ng-click="hideLogin()">
+				x
+			</div>
+		</div>
+		<form ng-submit="userLogin()">
+			<input type="text" ng-model="logindata.username" placeholder="username" required>
+			<input type="password" ng-model="logindata.password" placeholder="password" required>
+
+			<div class="group">
+				<div class="ingatlogin">
+					<label for="ingatlogin">Ingat Login</label>
+					<input type="checkbox" id="ingatlogin" ng-model="logindata.remember">
+				</div>
+
+				<button class="awesome" type="submit">
+					<span class="icon fa fa-sign-in"></span>
+					<span class="text">Login</span>
+				</button>
+
+			</div>
+			<div class="keterangan">Belum punya akun? <a ng-click="showRegister()" href>Register</a></div>
+		</form>
+	</div>
+</div>

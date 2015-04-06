@@ -23,6 +23,7 @@ searchMod.controller("SearchController", ["$scope", "$location", "$element", "$h
 
 			SC.get('/tracks', { q: $scope.searchText, limit: 5}, function(tracks) {
 				// get search result
+				lg("Soundcloud Search", tracks);
 				for (var i = 0; i < tracks.length; i++) {
 					if (tracks[i].streamable && (tracks[i].policy == "ALLOW")) {
 						$scope.searchResult.push({
@@ -45,7 +46,7 @@ searchMod.controller("SearchController", ["$scope", "$location", "$element", "$h
 
 			$http.get("https://www.googleapis.com/youtube/v3/search?part=id,snippet&q=" + encodeURI($scope.searchText) + "&type=video&order=relevance&maxResults=5&key=" + google_id).
 			success(function(res) {
-				lg(res);
+				lg("Youtube Search", res);
 				if (res.items.length > 0) {
 					for (var i = 0; i < res.items.length; i++) {
 						$scope.searchResult.push({

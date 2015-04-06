@@ -17,6 +17,20 @@ playerMod.service("playlist", function() {
 	this.getAt = function(index) {
 		return this.current.songs[index];
 	}
+	this.nextSong = function() {
+		if (this.current && (this.currentIndex < (this.current.songs.length-1))) {
+			this.currentIndex++;
+			return this.current.songs[this.currentIndex];
+		}
+		return null;
+	}
+	this.prevSong = function() {
+		if (this.current && (this.currentIndex > 0)) {
+			this.currentIndex--;
+			return this.current.songs[this.currentIndex];
+		}
+		return null;
+	}
 	this.isCurrent = function() {
 		if (this.current.title)
 			return true;
@@ -80,12 +94,49 @@ playerMod.directive('playerDirective', ["$window", function ($window) {
         			width: element[0].offsetWidth,
         			height: element[0].offsetWidth * 9 / 16
         		});
+        		yplayer.addEventListener("onReady", onReady);
+        		yplayer.addEventListener("onStateChange", onStateChange);
+
+        		function onReady() {
+        			lg("Youtube Ready");
+        		}
+        		function onStateChange(e) {
+        			if (e.data == YT.PlayerState.ENDED) {
+        				yplayer.getIframe().style.display = "none";
+        				scope.playNextSong();
+        			} else if (e.data == YT.PlayerState.PAUSED) {
+        				scope.isPaused = true;
+        				scope.isPlay = false;
+        				scope.$apply();
+        				lg("PAUSED");
+        			} else if (e.data == YT.PlayerState.PLAYING) {
+        				scope.isPlay = true;
+        				scope.isPaused = false;
+        				scope.$apply();
+        				lg("PLAYING");
+        			}
+        		}
+
         		yp = yplayer;
+        		scope.resumeYoutube = function() {
+        			scope.isPlay = true;
+        			scope.isPaused = false;
+        			yplayer.playVideo();
+        		}
+        		scope.pauseYoutube = function() {
+        			scope.isPlay = false;
+        			scope.isPaused = true;
+        			yplayer.pauseVideo();
+        		}
         		scope.playYoutube = function(id) {
         			yplayer.getIframe().style.display = "block";
         			yplayer.loadVideoById(id);
         			scope.isPlay = true;
-        			scope.playFrom = "yt";
+        			scope.isPaused = false;
+        		}
+        		scope.stopYoutube = function() {
+        			yplayer.getIframe().style.display = "none";
+        			yplayer.stopVideo();
         		}
 
         		lg("Youtube API Iframe Ready");
@@ -125,20 +176,31 @@ playerMod.controller("playlistController", ["$scope", "$location", "$element", "
 	}
 }]);
 playerMod.controller("PlayerController", ["$scope", "$location", "$element", "playlist", function($scope, $location, $element, playlist) {
-	
-	lg($element);
 
+	//lg($element);
 	var video = $element[0].children[1];
 	video.volume = 0.1;
 	video.src = "";
 
 	$scope.isPlay = false;
+	$scope.isPaused = false;
 	$scope.playerPlay = function() {
-		lg("PLAY", video.src);
+		//lg("PLAY", video.src);
+		$scope.isPlay = true;
+		$scope.isPaused = false;
 		video.play();
 	}
 	$scope.playerPause = function() {
+		$scope.isPlay = false;
+		$scope.isPaused = true;
 		video.pause();
+	}
+
+	$scope.playerStop = function() {
+		$scope.isPaused = false;
+		$scope.isPlay = false;
+		video.pause();
+		video.src = "";
 	}
 
 	$scope.playUrl = function(url) {
@@ -147,31 +209,80 @@ playerMod.controller("PlayerController", ["$scope", "$location", "$element", "pl
 	}
 
 	$scope.playAt = function(index) {
+		if ($scope.isPlay) {
+			if ($scope.playFrom == "sc")
+				$scope.playerStop();
+			else if ($scope.playFrom == "yt")
+				$scope.stopYoutube();
+		}
+
 		var song = playlist.getAt(index);
 		playlist.setAt(index);
 		$scope.playObject(song);
 	}
 
 	$scope.playObject = function(obj) {
-		lg("play object", obj);
+		//lg("play object", obj);
 		if (obj.from == "sc") {
+			$scope.playFrom = "sc";
 			$scope.playUrl(obj.url);
 		} else if (obj.from = "yt") {
+			$scope.playFrom = "yt";
 			$scope.playYoutube(obj.id);
+		}
+		$scope.thumbnail = obj.thumbnail;
+	}
+
+	//player controller
+	$scope.controlPlay = function() {
+		if ($scope.playFrom == "yt") {
+			$scope.resumeYoutube();
+		} else if ($scope.playFrom == "sc") {
+			video.play();
+		}
+	}
+	$scope.controlPause = function() {
+		if ($scope.playFrom == "yt") {
+			$scope.pauseYoutube();
+		} else if ($scope.playFrom == "sc") {
+			$scope.playerPause();
 		}
 	}
 
+	$scope.playNextSong = function() {
+		var ns = playlist.nextSong();
+		if (ns != null) {
+			$scope.playObject(ns);
+		} else {
+			lg("end of playlist");
+		}
+		$scope.$apply();
+	}
+	$scope.playPrevSong = function() {
+		var ns = playlist.nextSong();
+		if (ns != null) {
+			$scope.playObject(ns);
+		} else {
+			lg("end of playlist");
+		}
+		$scope.$apply();
+	}
+
+	//soundcloud event listener
 	video.addEventListener("play", function() {
 		$scope.isPlay = true;
-		$scope.playFrom = "sc";
+		$scope.isPaused = false;
 		$scope.$apply();
 	});
 	video.addEventListener("pause", function() {
 		$scope.isPlay = false;
+		$scope.isPaused = true;
 		$scope.$apply();
 	});
 	video.addEventListener("ended", function() {
 		$scope.isPlay = false;
+		$scope.isPaused = false;
+		$scope.playNextSong();
 		$scope.$apply();
 	});
 

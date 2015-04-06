@@ -1,0 +1,26 @@
+<div class="popup login" ng-show="registershow">
+	<div class="wrapper">
+		<div class="header">
+			<h2>Register</h2>
+			<div class="exit" ng-click="hideRegister()">
+				x
+			</div>
+		</div>
+		<form ng-submit="userLogin()">
+			<input type="text" ng-model="registerdata.username" placeholder="username" required>
+			<input type="email" ng-model="registerdata.email" placeholder="email" required>
+			<input type="password" ng-model="registerdata.password" placeholder="password" required>
+			<input type="password" ng-model="registerdata.password2" placeholder="ulangi password" required>
+
+			<div class="group">
+
+				<button class="awesome" type="submit">
+					<span class="icon fa fa-user"></span>
+					<span class="text">Register</span>
+				</button>
+			</div>
+
+			<div class="keterangan">Sudah punya akun? <a ng-click="showLogin()" href>Login</a></div>
+		</form>
+	</div>
+</div>
