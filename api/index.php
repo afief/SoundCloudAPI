@@ -24,7 +24,11 @@ $app->post("/login", function() {
 		if ($key) {
 			$result->status = true;
 			$result->key = $key;
+		} else {
+			$result->message = "wrong";
 		}
+	} else {
+		$result->message = "sketcy";
 	}
 	echo json_encode($result);
 });
@@ -119,7 +123,11 @@ $app->post("/user", function() {
 
 			$result->status = true;
 			$result->data = $user;
+		} else {
+			$result->message = "key_invalid";
 		}
+	} else {
+		$result->message = "sketcy";
 	}
 
 	echo json_encode($result);
@@ -159,6 +167,9 @@ $app->get("/email/:email", function($email) {
 	echo json_encode($result);
 });
 
+
+include "puterin.php";
+
 //route functions
 function cekGetUserKey($username, $password) {
 	global $db;
@@ -194,12 +205,12 @@ function registerNewUser($username, $password, $email, $status) {
 }
 function logoutByKey($key) {
 	global $db;
-	$row = $db->delete("me_login", ["key" => $key]);
+	$row = $db->update("me_login", ["status" => 0], ["key" => $key]);
 	return $row;
 }
 function logoutAll($userid) {
 	global $db;
-	$row = $db->delete("me_login", ["id_user" => $userid]);
+	$row = $db->update("me_login", ["status" => 0], ["id_user" => $userid]);
 	return $row;
 }
 function getUserByKey($key) {

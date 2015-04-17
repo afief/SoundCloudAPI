@@ -1,5 +1,7 @@
-var userModule = angular.module("UserModule", []);
-var qq;
+var userModule = angular.module("UserModule", [], ["$httpProvider", function($httpProvider) {
+	$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+}]);
+
 userModule.factory("user", ["$http","$q", function($http, $q) {
 
 	var key = window.localStorage.getItem("key") || "";
@@ -35,26 +37,34 @@ userModule.factory("user", ["$http","$q", function($http, $q) {
 			return isLogin;
 		},
 		login: function(credential) {
-
-			var promise = $http.post("api/login", serialize(credential));
-			promise.success(function(res) {
+			var deferred = $q.defer();
+			$http.post("api/login", serialize(credential)).
+			success(function(res) {
 				if (res.status) {
 					changeKey(res.key);
 					isLogin = true;
 				}
-			});
+				deferred.resolve(res);
+			}).
+			error(deferred.resolve);
 
-			return promise;
+			return deferred.promise;
 		},
 		cek: function() {
-			console.log("key", key);
+			console.log("key", key);	
+
 			var deferred = $q.defer();
 
 			if (key == "")
 				return $q.when({status: false});
 
 			$http.post("api/user", serialize({key: key})).
-			success(deferred.resolve).
+			success(function(res) {
+				if (res.status) {
+					isLogin = true;
+				}
+				deferred.resolve(res);
+			}).
 			error(deferred.resolve);
 
 			return deferred.promise;
@@ -62,17 +72,41 @@ userModule.factory("user", ["$http","$q", function($http, $q) {
 		changeKey: changeKey,
 		logout: function() {
 
-			var promise = $http.post("api/logout", serialize({key: key}));
-			promise.success(function(data) {
+			var deferred = $q.defer();
+
+			$http.post("api/logout", serialize({key: key})).
+			success(function(data) {
 				if (data.status) {
 					isLogin = false;
 				}
 				changeKey("");
-			}).catch(function(err) {
+				deferred.resolve(data);
+			}).
+			error(function(err) {
 				changeKey("");
+				deferred.resolve(err);
 			});
 
-			return promise;
+			return deferred.promise;
+		},
+
+
+		//puterin stuff
+		createNewPlaylist: function(nama) {
+			var deffered = $q.defer();
+
+			$http.post("api/new", serialize({key: key, nama: nama})).
+			success(function(res) {
+				if (res.status) {
+					deffered.resolve(res.key);
+				} else {
+					deffered.resolve(false);
+				}
+			}).
+			error(function(err) {
+				deffered.resolve(false);
+			});
+			return deffered.promise;
 		}
 	}
 

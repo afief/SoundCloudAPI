@@ -9,7 +9,7 @@ searchMod.directive('searchDirective', function () {
     }
 });
 
-searchMod.controller("SearchController", ["$scope", "$location", "$element", "$http", "playlist", function($scope, $location, $element, $http,playlist) {
+searchMod.controller("SearchController", ["$scope", "$location", "$element", "$http", "playlist", "user", function($scope, $location, $element, $http, playlist, user) {
 
 	lg("Search Controller");
 
@@ -72,26 +72,51 @@ searchMod.controller("SearchController", ["$scope", "$location", "$element", "$h
 	}
 
 	$scope.resultClick = function(res) {
-		if (res.from == "yt") {
-			if (playlist.add("_", res))
-				lg(playlist.current);
+		if (user.isLogin()) {
 
-			$http.get("https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=" + res.id + "&key=" + google_id).
-			success(function(dat) {
-				lg("content details", dat);
-				if (dat.items.length > 0) {
-					res.duration = youtubeTime(dat.items[0].contentDetails.duration);
-					playlist.resetDuration('_');
-				}
-			}).
-			error(function(err) {
-				lg("error", err);
-			});
-		} else if (res.from == "sc") {
-			if (playlist.add("_", res))
-				lg(playlist.current);
-			playlist.resetDuration('_');
+			var _nama = prompt("Masukkan Judul Playlist", "Playlist Baru");
+			lg(_nama);
+			if (_nama != null) {
+
+				user.createNewPlaylist(_nama).then(function(key) {
+					if (key) {
+						playlist.createNew(key);
+					} else {
+						lg("key false");
+					}
+				});
+
+			}
+
+			if (res.from == "yt") {
+				if (playlist.add("_", res))
+					lg("added", playlist.current.songs.length);
+
+				$http.get("https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=" + res.id + "&key=" + google_id).
+				success(function(dat) {
+					lg("content details", dat);
+					if (dat.items.length > 0) {
+						res.duration = youtubeTime(dat.items[0].contentDetails.duration);
+						playlist.resetDuration('_');
+					}
+				}).
+				error(function(err) {
+					lg("error", err);
+				});
+			} else if (res.from == "sc") {
+				if (playlist.add("_", res))
+					lg("added", playlist.current.songs.length);
+
+				playlist.resetDuration('_');
+			}
+
+
+		} else {
+			$scope.showLogin();
 		}
+	}
+	$scope.addSongToPlaylist = function(pl_key) {
+		
 	}
 
 }]);

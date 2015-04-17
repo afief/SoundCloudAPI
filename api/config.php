@@ -2,7 +2,7 @@
 
 $db = new medoo([
 	'database_type' => 'mysql',
-	'database_name' => 'tryout',
+	'database_name' => 'puterin',
 	'server' => 'localhost',
 	'username' => 'root',
 	'password' => 'root',

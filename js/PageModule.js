@@ -6,7 +6,12 @@ pageModule.config(['$routeProvider',
 		when('/', {
 			templateUrl: 'pages/home.html',
 			controller: 'HomeController',
-			authenticate: false
+			authenticate: false,
+			resolve: {
+				usercek: ["user", function(user) {
+					return user.cek();
+				}]
+			}
 		}).
 		otherwise({
 			redirectTo: '/'
@@ -31,7 +36,7 @@ pageModule.directive("popupLogin", function() {
 		restrict: 'A',
 		replace: true,
 		templateUrl: "pages/login.html",
-		controller: ["$scope", "$route", function($scope, $route) {
+		controller: ["$scope", "$route", "user", function($scope, $route, user) {
 			$scope.loginshow = false;
 			$scope.logindata = {
 				username: "",
@@ -47,6 +52,15 @@ pageModule.directive("popupLogin", function() {
 			}
 			$scope.userLogin = function() {
 				lg($scope.logindata);
+
+				user.login($scope.logindata).then(function(res) {
+					if (res.status) {
+						lg(res);
+						$scope.hideLogin();
+					} else {
+						alert("Username / Password salah");
+					}
+				});
 			}
 		}]
 	}
@@ -81,8 +95,8 @@ pageModule.directive("popupRegister", function() {
 
 
 /* Home Controller */
-pageModule.controller("HomeController", ["$scope", "$location", function($scope, $location) {
+pageModule.controller("HomeController", ["$scope", "$location", "usercek", function($scope, $location, usercek) {
 	lg("PAGE HOME");
 
-	
+	lg(usercek.data);
 }]);

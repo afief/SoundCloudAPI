@@ -63,7 +63,11 @@ playerMod.service("playlist", function() {
 			return false;
 		}
 	}
+	this.createNew = function(judul) {
+		lg("create new : ", judul);
+	}
 });
+
 
 playerMod.directive('playlistDirective', ["$window", function ($window) {
 	return {
