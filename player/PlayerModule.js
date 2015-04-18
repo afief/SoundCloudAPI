@@ -2,14 +2,9 @@ var playerMod = angular.module("PlayerModule", []);
 
 playerMod.service("playlist", function() {
 	this.list = {
-		_: {
-			title: "Playlist Baru",
-			songs: [],
-			totalDuration: 0
-		}
 	};
 	this.current = {};
-	this.currentIndex = -1;
+	this.currentIndex = -1; //current song index
 
 	this.setAt = function(index) {
 		this.currentIndex = index;
@@ -55,6 +50,7 @@ playerMod.service("playlist", function() {
 				this.list[listID].songs.push(obj);
 				this.list[listID].totalDuration += obj.duration;
 				this.current = this.list[listID];
+				this.current.key = listID;
 				return true;
 			}
 			else {
@@ -63,8 +59,12 @@ playerMod.service("playlist", function() {
 			return false;
 		}
 	}
-	this.createNew = function(judul) {
-		lg("create new : ", judul);
+	this.createNew = function(key, nama) {
+		this.list[key] = {
+			title: nama,
+			songs: [],
+			totalDuration: 0
+		}
 	}
 });
 

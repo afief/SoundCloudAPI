@@ -107,6 +107,22 @@ userModule.factory("user", ["$http","$q", function($http, $q) {
 				deffered.resolve(false);
 			});
 			return deffered.promise;
+		},
+		saveSongsOnline: function(pl_key, songs) {
+			var deffered = $q.defer();
+
+			$http.post("api/songs", serialize({key: key, pl_key: pl_key, songs: JSON.stringify(songs)})).
+			success(function(res) {
+				if (res.status) {
+					deffered.resolve(res.data);
+				} else {
+					deffered.resolve(false);
+				}
+			}).
+			error(function(err) {
+				deffered.resolve(false);
+			});
+			return deffered.promise;
 		}
 	}
 

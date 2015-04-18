@@ -74,49 +74,82 @@ searchMod.controller("SearchController", ["$scope", "$location", "$element", "$h
 	$scope.resultClick = function(res) {
 		if (user.isLogin()) {
 
-			var _nama = prompt("Masukkan Judul Playlist", "Playlist Baru");
-			lg(_nama);
-			if (_nama != null) {
+			if (!playlist.current.title) {
+				var _nama = prompt("Masukkan Judul Playlist", "Playlist Baru");
+				lg(_nama);
+				if (_nama != null) {
 
-				user.createNewPlaylist(_nama).then(function(key) {
-					if (key) {
-						playlist.createNew(key);
-					} else {
-						lg("key false");
-					}
-				});
+					user.createNewPlaylist(_nama).then(function(key) {
+						if (key) {
+							playlist.createNew(key, _nama);
+							$scope.addSongToPlaylist(res, key);
+						} else {
+							alert("Connection Failed. Try again or call Afief");
+						}
+					});
 
+				}
+			} else {
+				$scope.addSongToPlaylist(res, playlist.current.key);
 			}
 
-			if (res.from == "yt") {
-				if (playlist.add("_", res))
-					lg("added", playlist.current.songs.length);
+		} else {
+			$scope.showLogin();
+		}
+	}
+	$scope.addSongToPlaylist = function(res, pl_key) {
+		
 
+		if (playlist.add(pl_key, res)) {
+			lg("added", playlist.current.songs.length);
+			res.online = false;
+
+			$scope.saveSongsOnline();
+
+			if (res.from == "yt") {
 				$http.get("https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=" + res.id + "&key=" + google_id).
 				success(function(dat) {
 					lg("content details", dat);
 					if (dat.items.length > 0) {
 						res.duration = youtubeTime(dat.items[0].contentDetails.duration);
-						playlist.resetDuration('_');
+						playlist.resetDuration(pl_key);
 					}
 				}).
 				error(function(err) {
 					lg("error", err);
 				});
 			} else if (res.from == "sc") {
-				if (playlist.add("_", res))
-					lg("added", playlist.current.songs.length);
-
-				playlist.resetDuration('_');
+				playlist.resetDuration(pl_key);
 			}
-
-
-		} else {
-			$scope.showLogin();
 		}
 	}
-	$scope.addSongToPlaylist = function(pl_key) {
-		
+	$scope.saveSongsOnline = function() { //sincronizing songs to online server
+		lg("save online init");
+
+		var songs = [];
+		if (playlist.current.title) {
+			for (var i = 0; i < playlist.current.songs.length; i++) {
+				if (!playlist.current.songs[i].online) {
+					songs.push(playlist.current.songs[i]);
+				}
+			}
+		}
+		if (songs.length > 0) {
+			user.saveSongsOnline(playlist.current.key, songs).
+			then(function(res) {
+				lg("songs saved", res);
+				if (res) {
+					for (var i = 0; i < res.length; i++) {
+						for (var j = 0; j < playlist.current.songs.length; j++) {
+							if (playlist.current.songs[j].id == res[i])
+								playlist.current.songs[j].online = true;
+						}
+					}
+				}
+			});
+		} else {
+			lg("songs already updated");
+		}
 	}
 
 }]);
